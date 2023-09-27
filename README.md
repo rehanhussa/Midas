@@ -22,7 +22,7 @@ It allows the user to paper trade and view their favorite stocks.
 
 ## Getting Started
 
-[Deployed Front-End]()
+[Deployed Front-End](https://midasgold.netlify.app/)
 
 ## Screenshots
 
