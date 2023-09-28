@@ -29,3 +29,10 @@ export async function isTokenValid() {
   const response = await api.get('/auth/isTokenValid')
   return response.data
 }
+
+export function logout() {
+    // Remove the token from localstorage
+    localStorage.removeItem(LOCALSTORAGE_KEY);
+    // Optionally, you can also reset any user state in your application here
+    // or redirect the user to the login page.
+  }

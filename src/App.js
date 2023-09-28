@@ -31,11 +31,10 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Topbar setIsSidebar={setIsSidebar} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <div className="app">
           <Sidebar isSidebar={isSidebar} />
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+          <Topbar setIsSidebar={setIsSidebar} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <Routes>
   <Route path="/auth/signin" element={<Login />} />
   <Route path="/" element={<ProtectecRoute><Dashboard /></ProtectecRoute>} />
