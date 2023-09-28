@@ -58,7 +58,7 @@ export default function Login() {
                             <button className="btn mt-4">Login</button>
                           </form>
                           <p className="mb-0 mt-4 text-center">
-                            {'No Account ? '}
+                            {'No Account? '}
                             <Link to="/auth/signup">Go to Signup</Link>
                             {' instead.'}
                           </p>
