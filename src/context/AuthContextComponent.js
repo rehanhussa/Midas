@@ -4,7 +4,7 @@ import { isTokenValid } from '../api/auth';
 export const AuthContext = createContext(null);
 
 export default function AuthContextComponent({ children }) {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(null);
     const [user, setUser] = useState({});
 
     useEffect(() => {

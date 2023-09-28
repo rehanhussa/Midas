@@ -49,7 +49,7 @@ export default function Login() {
                               <input
                                 type="password"
                                 className="form-style"
-                                placeholder="Password"
+                                current-password="current-password"
                                 value={password}
                                 onChange={e => setPassword(e.target.value)}
                               />
