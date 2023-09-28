@@ -33,3 +33,5 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
+// assume I have getAllUserStocks / 
