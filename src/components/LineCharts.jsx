@@ -6,6 +6,8 @@ const LineChart = ({ data }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {

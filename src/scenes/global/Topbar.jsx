@@ -23,7 +23,7 @@ const Topbar = () => {
     }
   
     return (
-      <Box display="flex" justifyContent="space-between" p={2}>
+      <Box display="flex" justifyContent="space-between" p={2} bgcolor={colors.background}>
         {/* SEARCH BAR */}
         <Box>
            <Search />
@@ -52,6 +52,6 @@ const Topbar = () => {
         </Box>
       </Box>
     );
-  };
-  
-  export default Topbar;
+};
+
+export default Topbar;
