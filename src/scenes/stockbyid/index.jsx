@@ -1,9 +1,10 @@
 import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
-import { purchaseStock, sellSomeStocks, sellAllStocks, getStockData, getUserStockById } from '../../api/stocks';
+import { purchaseStock, sellSomeStocks, sellAllStocks, getStockData, getHistoricalStockData, getUserStockById } from '../../api/stocks';
 import { useState, useEffect, useContext } from "react";
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContextComponent'
+import LineCharts from "../../components/LineCharts";
 
 const Stock = () => {
     const theme = useTheme();
@@ -24,8 +25,9 @@ const Stock = () => {
     useEffect(() => {
         const fetchStock = async () => {
             try {
-                const stockData = await getStockData(id);
+                const stockData = await getHistoricalStockData(id);
                 setData(stockData);
+                console.log("STOCK DATA", stockData)
             } catch (error) {
                 console.error("Error setting stock data in state:", error);
             }
@@ -56,13 +58,23 @@ const Stock = () => {
         } */
     }
 
+console.log(data)
     return (
         <div>
-            {data && Object.entries(data).map(([key, value]) => (
+            <div className="price-container b-2">
+
+            {/* {data && Object.entries(data).map(([key, value]) => (
                 <div key={key}>
                     <p>{key}: {value}</p>
                 </div>
-            ))}
+            ))} */}
+            <LineCharts data={data} />
+
+                <div key={data.symbol}>
+                    <p>{id}</p>
+                    <p>latestprice: {data.c}</p>
+                </div>
+            </div>
             <form className="buy-form" onSubmit={handleBuySubmit}>
                 <div>
                     {/* Amount */}

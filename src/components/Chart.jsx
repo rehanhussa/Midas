@@ -24,7 +24,7 @@ const Chart = () => {
 
   const [filter, setFilter] = useState("1W");
 
-  const { stockSymbol } = useContext(StockContext);
+  const stockSymbol = useContext(StockContext);
 
   const formatData = (data) => {
     return data.c.map((item, index) => {

@@ -17,8 +17,10 @@ import { AuthContext } from './context/AuthContextComponent';
 import Login from "./scenes/loginPage";
 import Signup from "./scenes/signup";
 import ProtectecRoute from './components/ProtectedRoute';
+import Chart from "./components/Portfolio";
 import Portfolio from "./scenes/portfolio";
 import Stock from "./scenes/stockbyid";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -49,7 +51,8 @@ function App() {
             <Routes>
               <Route path="/auth/signin" element={<Login />} />
               <Route path="/auth/signup" element={<Signup />} />
-              <Route path="/" element={<ProtectecRoute><Dashboard /></ProtectecRoute>} />
+              <Route path="/" element={<ProtectecRoute><Chart /></ProtectecRoute>} />
+              <Route path="/stocks" element={<ProtectecRoute><Dashboard /></ProtectecRoute>} />
               <Route path="/form" element={<ProtectecRoute><Form /></ProtectecRoute>} />
               <Route path="/bar" element={<ProtectecRoute><Bar /></ProtectecRoute>} />
               <Route path="/pie" element={<ProtectecRoute><Pie /></ProtectecRoute>} />

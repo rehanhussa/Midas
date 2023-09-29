@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { XIcon, SearchIcon } from '@heroicons/react/solid'
-import { Link } from 'react-router-dom'; // Import Link from React Router
+import { Link } from 'react-router-dom';
 import { stocksData } from '../data/stocksData';
 
 const Search = () => {
@@ -8,7 +8,7 @@ const Search = () => {
     const [bestMatches, setBestMatches] = useState([])
 
     useEffect(() => {
-        updateBestMatches(); // Update matches when input changes
+        updateBestMatches();
     }, [input]);
 
     const clear = () => {
@@ -19,21 +19,21 @@ const Search = () => {
     const updateBestMatches = () => {
         if (input) {
             const matches = stocksData.filter(stock => stock.displaySymbol.includes(input.toUpperCase()));
-            setBestMatches(matches);
+            setBestMatches(matches.slice(0, 5)); // Limiting the results to the first five matches
         } else {
             setBestMatches([]);
         }
     };
 
     return (
-        <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 bg-white border-neutral-200">
+        <div className="flex items-center my-4 border-2 rounded-md relative z-50 w-96 border-neutral-200">
             <input 
                 type="text" 
                 value={input} 
-                className="w-full px-4 py-2 focus:outline-none rounded-md" 
+                className="w-full px-4 py-2 focus:outline-none rounded-md bg-white text-black" // Set background to white and text to black
                 placeholder="Search Stocks"
                 onChange={(event) => setInput(event.target.value)}
-                list="stocks" // Link the input to the datalist
+                list="stocks"
             />
             <datalist id="stocks">
                 {stocksData.map(stock => (
@@ -42,11 +42,11 @@ const Search = () => {
             </datalist>
 
             {input && <button onClick={clear}> 
-                <XIcon classname="h-4 w-4 fill-gray-500" />
+                <XIcon className="h-4 w-4" />
             </button>}
 
             <button onClick={updateBestMatches} className="h-8 w-8 bg-indigo-600 rounded-md flex justify-center items-center m-1 p-2">
-                <SearchIcon className="h-4 w-4 fill-gray-100" />
+                <SearchIcon className="h-4 w-4 orange" />
             </button>
 
             {input && bestMatches.length > 0 && (

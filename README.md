@@ -26,25 +26,13 @@ It allows the user to paper trade and view their favorite stocks.
 
 ## Screenshots
 
-![image]()
+![image](https://github.com/rehanhussa/Midas/blob/features/loginlayout/home.png)
+![image](https://github.com/rehanhussa/Midas/blob/features/loginlayout/dashboard.png)
 
 
 ## Trello
 
 [Trello Link](https://trello.com/b/W70a7V17/midas-simulated-stock-exchange)
-
-## USER FLOW
-
-![image]()
-
-## Wireframe 
-
-1. Landing Page
-2. Register Page
-3. Login Page
-4. Dashboard After Login
-5. Paper Trade page
-6. View Stocks page
 
 ## Motivation
 
@@ -53,10 +41,10 @@ We wanted to test our skills and build a application that would challenge us. We
 ## How to Use
 
 Login to the webpage / create an account. 
-A list of stocks should be displayed to the user on the home page.
-A paper trade balance should be displayed to the user if they click the trading tab. 
+A list of data should be displayed to the user on the home page.
+A paper trade balance should be displayed to the user if they click the portfolio tab. 
 With this they can Buy & Sell stocks.
-
+If the user wants to search for a stock they can do so by clicking the search tab and entering the stock symbol.
 Enjoy Trading!
 
 

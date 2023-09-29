@@ -17,6 +17,18 @@ export async function getStockData(id) {
     }
 }
 
+export async function getHistoricalStockData(id) {
+    try {
+        const response = await fetch(`${ROOT}stock/candle?symbol=${id}&resolution=1&from=1693493346&to=1693752546&token=${token}`);
+        const data = await response.json();
+        console.log(data);
+        return data;
+    } catch (error) {
+        console.error("Error fetching stock data:", error);
+        return null;
+    }
+}
+
 // Search Stocks
 
 // searchStock

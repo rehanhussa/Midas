@@ -34,7 +34,8 @@ function ProtectedRoute({ children }) {
   if (isLoggedIn || isAuthRoute) {
     return children;
   } else {
-    return <Navigate to="/auth/signin" />;
+    // return <Navigate to="/auth/signin" />;
+    return children;
   }
 }
 
