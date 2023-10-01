@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, List, ListItem, Divider } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
+import { getUserTrades } from '../../api/users';
 
 const Investment = () => {
     const theme = useTheme();

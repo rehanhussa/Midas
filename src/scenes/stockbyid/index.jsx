@@ -10,7 +10,7 @@ const Stock = () => {
     const { id } = useParams();
 
     const [data, setData] = useState({});
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState("");
     const [cost, setCost] = useState(0);
     const [balance, setBalance] = useState(localStorage.getItem('userBalance'));
     const [userQuantity, setUserQuantity] = useState(0);
