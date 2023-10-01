@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Typography, useTheme, List, ListItem, Divider } from "@mui/material";
 import { tokens } from "../../theme";
 import Header from "../../components/Header";
-import { getUserTrades } from '../../api/users';
+import { getUserStocks } from '../../api/users';
 
 const Investment = () => {
     const theme = useTheme();
@@ -13,7 +13,7 @@ const Investment = () => {
     useEffect(() => {
         const fetchUserTrades = async () => {
             try {
-                const fetchedTrades = await getUserTrades();
+                const fetchedTrades = await getUserStocks();
                 const processedTrades = processTrades(fetchedTrades.userTrades);
                 setUserTrades({ ...fetchedTrades, userTrades: processedTrades });
             } catch (error) {
