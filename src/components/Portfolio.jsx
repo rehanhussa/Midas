@@ -4,8 +4,9 @@ import Details from "./Details";
 import Chart from "./Chart";
 import Header from "./Header";
 import StockContext from "../context/StockContext";
-import { fetchStockDetails, fetchQuote } from "../utils/api/stock-api";
-// import { fetchStockDetails, fetchQuote } from "../utils/api/stock-api";
+import { fetchQuote, fetchStockDetails } from "../api/stock-api";
+
+
 
 const Portfolio = () => {
 

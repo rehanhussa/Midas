@@ -15,7 +15,7 @@ export const searchSymbol = async (query) => {
 export const fetchStockDetails = async (stockSymbol) => {
   const url = `${basePath}/stock/profile2?symbol=${stockSymbol}&token=${process.env.REACT_APP_API_KEY}`;
   const response = await fetch(url);
-
+ console.log(url)
   if (!response.ok) {
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
@@ -42,9 +42,9 @@ export const fetchHistoricalData = async (
   from,
   to
 ) => {
-  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=${resolution}&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
+  const url = `${basePath}/stock/candle?symbol=${stockSymbol}&resolution=1&from=${from}&to=${to}&token=${process.env.REACT_APP_API_KEY}`;
   const response = await fetch(url);
-
+console.log(url)
   if (!response.ok) {
     const message = `An error has occured: ${response.status}`;
     throw new Error(message);
