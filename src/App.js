@@ -19,11 +19,15 @@ import Signup from "./scenes/signup";
 import ProtectedRoute from './components/ProtectedRoute';
 import Investment from "./scenes/investments";
 import Stock from "./scenes/stockbyid";
+import StocksList from "./scenes/list";
+import Portfolio from "./components/Portfolio";
+import StockContext from "./context/StockContext";
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [stockSymbol, setStockSymbol] = useState('');
   const location = useLocation();
 
   // Check if the current route is /auth/signin or /auth/signup
@@ -32,6 +36,7 @@ function App() {
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
+        <StockContext.Provider value={{ stockSymbol, setStockSymbol }}>
         <CssBaseline />
         <div className="app">
           {!isAuthRoute && (
@@ -62,9 +67,12 @@ function App() {
               <Route path="/investments" element={<ProtectedRoute><ProtectedRoute><Investment /></ProtectedRoute></ProtectedRoute>} />
               <Route path="/stocks/:id" element={<ProtectedRoute><ProtectedRoute><Stock /></ProtectedRoute></ProtectedRoute>} />
               <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+              <Route path="/stocks" element={<ProtectedRoute><StocksList /></ProtectedRoute>} />
+              <Route path="/portfolio" element={<ProtectedRoute><Portfolio /></ProtectedRoute>} />
             </Routes>
           </main>
         </div>
+        </StockContext.Provider>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

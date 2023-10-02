@@ -20,3 +20,24 @@ export const convertDateToUnixTimestamp = (date) => {
     newDate.setFullYear(newDate.getFullYear() + years);
     return newDate;
   };
+
+  export const getCurrentTime = () => {
+    const date = new Date();
+    return date.toLocaleTimeString();
+  };
+
+  export const getRelevantDates = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset the time to the start of the day
+
+    const oneWeekAgo = createDate(today, 0, -1, 0, 0);
+    const oneMonthAgo = createDate(today, 0, 0, -1, 0);
+    const oneYearAgo = createDate(today, 0, 0, 0, -1);
+
+    return {
+        today: convertDateToUnixTimestamp(today),
+        oneWeekAgo: convertDateToUnixTimestamp(oneWeekAgo),
+        oneMonthAgo: convertDateToUnixTimestamp(oneMonthAgo),
+        oneYearAgo: convertDateToUnixTimestamp(oneYearAgo)
+    };
+};

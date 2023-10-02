@@ -1,10 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
-import { mockHistoricalData } from "../data/mockData";
-import {
-  convertUnixTimestampToDate,
-  convertDateToUnixTimestamp,
-  createDate,
-} from "../helpers/date-helper";
+import React, { useEffect, useState, useContext } from "react";
 import {
   Area,
   XAxis,
@@ -12,101 +6,74 @@ import {
   ResponsiveContainer,
   AreaChart,
   Tooltip,
+  CartesianGrid,
 } from "recharts";
-import Card from "./Card";
+import { mockHistoricalData } from "../data/mockData";
+import {
+  convertUnixTimestampToDate,
+  convertDateToUnixTimestamp,
+  createDate,
+} from "../helpers/date-helper";
 import StockContext from "../context/StockContext";
+import { chartConfig } from "../data/config";
 import { fetchHistoricalData } from "../api/stock-api";
 import ChartFilter from "./ChartFilter";
-import { chartConfig } from "../data/config";
+import { getRelevantDates } from "../helpers/date-helper";
 
-const Chart = () => {
-  const [data, setData] = useState(mockHistoricalData);
 
-  const [filter, setFilter] = useState("1W");
-
-  const { stockSymbol } = useContext(StockContext);
-
-  const formatData = (data) => {
-    return data.c.map((item, index) => {
+const Chart = ({ stockSymbol }) => {
+  const [data, setData] = useState([]);
+  const currentStockValue = data.length > 0 ? parseFloat(data[data.length - 1].value) : null;
+  const minValue = data.length > 0 ? Math.min(...data.map(item => parseFloat(item.value))) : null;
+  const difference = currentStockValue ? currentStockValue - minValue : 0;
+  const domainMin = currentStockValue ? currentStockValue - difference : "dataMin";
+  const domainMax = currentStockValue ? currentStockValue + difference : "dataMax";
+  const [dates, setDates] = useState(( ) => getRelevantDates());
+  useEffect (() => {
+    console.log(dates)
+  }, [dates])
+  const formatData = (rawData) => {
+    return rawData.c.map((item, index) => {
       return {
         value: item.toFixed(2),
-        date: convertUnixTimestampToDate(data.t[index]),
+        date: convertUnixTimestampToDate(rawData.t[index]),
       };
     });
   };
 
   useEffect(() => {
-    const getDateRange = () => {
-      const { days, weeks, months, years } = chartConfig[filter];
-
-      const endDate = new Date();
-      const startDate = createDate(endDate, -days, -weeks, -months, -years);
-
-      const startTimestampUnix = convertDateToUnixTimestamp(startDate);
-      const endTimestampUnix = convertDateToUnixTimestamp(endDate);
-      return { startTimestampUnix, endTimestampUnix };
-    };
-
-    const updateChartData = async () => {
+    const fetchData = async () => {
       try {
-        const { startTimestampUnix, endTimestampUnix } = getDateRange();
-        const resolution = chartConfig[filter].resolution;
-        const result = await fetchHistoricalData(
-          stockSymbol,
-          resolution,
-          startTimestampUnix,
-          endTimestampUnix
-        );
-        setData(formatData(result));
+        const result = await fetchHistoricalData(stockSymbol, "1", dates.oneWeekAgo, Math.floor(Date.now() / 1000)); // Replace this with your actual API call
+        setData(result);
+        console.log(result)
       } catch (error) {
+        console.error("Error fetching data:", error);
         setData([]);
-        console.log(error);
       }
     };
 
-    updateChartData();
-  }, [stockSymbol, filter]);
-
+    fetchData();
+  }, [stockSymbol]);
   return (
-    <Card>
-      <ul className="flex absolute top-2 right-2 z-40">
+    <div>
+      <ul className="flex">
         {Object.keys(chartConfig).map((item) => (
           <li key={item}>
-            <ChartFilter
-              text={item}
-              active={filter === item}
-              onClick={() => {
-                setFilter(item);
-              }}
-            />
+            <button>{item}</button>
           </li>
         ))}
       </ul>
-      <ResponsiveContainer>
-        <AreaChart data={data}>
-          <defs>
-            <linearGradient id="chartColor" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor={"#312e81"} stopOpacity={0.8} />
-              <stop offset="95%" stopColor={"#312e81"} stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <Area
-            type="monotone"
-            dataKey="value"
-            stroke="#312e81"
-            fillOpacity={1}
-            fill="url(#chartColor)"
-            strokeWidth={0.5}
-          />
-          <Tooltip
-            contentStyle={{ backgroundColor: "#111827" }}
-            itemStyle={{ color: "#818cf8" }}
-          />
+      <ResponsiveContainer width="100%" height={400}>
+        <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis domain={["dataMin", "dataMax"]} />
+          <YAxis domain={[domainMin, domainMax]} />
+          <Tooltip />
+          <Area type="monotone" dataKey="value" stroke="#8884d8" fill="#8884d8" />
         </AreaChart>
       </ResponsiveContainer>
-    </Card>
+    </div>
   );
 };
 

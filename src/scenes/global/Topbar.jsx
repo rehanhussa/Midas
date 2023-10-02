@@ -11,12 +11,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import Search from "../../components/Search";
 import { Link, useNavigate } from "react-router-dom";
 
-
 const Topbar = () => {
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+    const currentMode = theme.palette.mode; // Get the current mode
+    const colors = tokens(currentMode);
     const colorMode = useContext(ColorModeContext);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const handleLogout = () => {
       console.log('logout')
@@ -38,21 +38,21 @@ const Topbar = () => {
         {/* ICONS */}
         <Box display="flex">
           <IconButton onClick={colorMode.toggleColorMode}>
-            {theme.palette.mode === "dark" ? (
-              <LightModeOutlinedIcon />
+            {currentMode === "dark" ? (
+              <LightModeOutlinedIcon style={{ color: '#e0e0e0' }} />
             ) : (
-              <DarkModeOutlinedIcon /> 
+              <DarkModeOutlinedIcon style={{ color: '#141414' }} />
             )}
           </IconButton>
-          <IconButton>
+          <IconButton style={{ color: currentMode === 'dark' ? '#e0e0e0' : '#141414' }}>
             <NotificationsOutlinedIcon />
           </IconButton>
-          <IconButton>
+          <IconButton style={{ color: currentMode === 'dark' ? '#e0e0e0' : '#141414' }}>
             <SettingsOutlinedIcon />
           </IconButton>
-          <IconButton onClick={handleLogout}>
+          <IconButton onClick={handleLogout} style={{ color: currentMode === 'dark' ? '#e0e0e0' : '#141414' }}>
             <span>
-            <LogoutIcon />
+              <LogoutIcon />
             </span>
           </IconButton>
         </Box>

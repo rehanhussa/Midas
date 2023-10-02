@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { getUserTrades } from '../../api/users';
+import { Box, Typography, useTheme, List, ListItem, Divider } from "@mui/material";
+import { tokens } from "../../theme";
+import Header from "../../components/Header";
+import { getUserStocks } from '../../api/users';
 
 const Investment = () => {
+    const theme = useTheme();
+    const colors = tokens(theme.palette.mode);
     const [userTrades, setUserTrades] = useState({});
     const [userBalance, setUserBalance] = useState(parseFloat(localStorage.getItem('userBalance')) || 0);
 
     useEffect(() => {
         const fetchUserTrades = async () => {
             try {
-                const fetchedTrades = await getUserTrades();
+                const fetchedTrades = await getUserStocks();
                 const processedTrades = processTrades(fetchedTrades.userTrades);
                 setUserTrades({ ...fetchedTrades, userTrades: processedTrades });
             } catch (error) {
@@ -46,21 +51,35 @@ const Investment = () => {
  const cashValue = userBalance - totalStake;
 
  return (
-     <div>
-         <h2>Total portfolio value: ${userBalance.toFixed(2)}</h2>
-         <h2>Brokerage Cash: ${cashValue.toFixed(2)}</h2>
-         <h2>Stocks:</h2>
-         <ul>
-             {userTrades.userTrades && userTrades.userTrades.map(trade => (
-                 <li key={trade.symbol}>
-                     <strong>Symbol:</strong> {trade.symbol} | 
-                     <strong>Quantity:</strong> {trade.quantity} | 
-                     <strong>Equity:</strong> ${trade.stake.toFixed(2)}
-                 </li>
-             ))}
-         </ul>
-     </div>
- );
+    <Box m="20px">
+        <Header title="Investment Portfolio" subtitle="Your Stocks and Balance" />
+        <Box my={3}>
+            <Typography variant="h5" color={colors.primary}>
+                Total portfolio value: ${userBalance.toFixed(2)}
+            </Typography>
+        </Box>
+        <Box my={3}>
+            <Typography variant="h5" color={colors.secondary}>
+                Brokerage Cash: ${cashValue.toFixed(2)}
+            </Typography>
+        </Box>
+        <Typography variant="h6">Stocks:</Typography>
+        <List>
+            {userTrades.userTrades && userTrades.userTrades.map(trade => (
+                <div key={trade.symbol}>
+                    <ListItem>
+                        <Typography>
+                            <strong>Symbol:</strong> {trade.symbol} | 
+                            <strong>Quantity:</strong> {trade.quantity} | 
+                            <strong>Equity:</strong> ${trade.stake.toFixed(2)}
+                        </Typography>
+                    </ListItem>
+                    <Divider />
+                </div>
+            ))}
+        </List>
+    </Box>
+);
 }
 
 export default Investment;
